@@ -1,16 +1,39 @@
 import os
 import pathlib
 import json
+import platform
 from google import genai
 from collections import deque
 
 ROOT = pathlib.Path(__file__).resolve().parent
 
 class GoogleTerminalGets:
-    def __init__(self, api_key, model_name="gemma-3-27b-it"):
-        self.client = genai.Client(api_key=api_key)
+    def __init__(self, model_name="gemma-3-27b-it"):
+        self.client = genai.Client(api_key=self.key)
         self.model_name = model_name
         self._config = None
+        self._key = None
+
+    @property
+    def key(self):
+        if hasattr(self, '_key') and self._key:
+            return self._key
+
+        home = pathlib.Path.home()
+        if platform.system() == 'Windows':
+            key_path = home / "AppData" / "Roaming" / "gemini" / "key.txt"
+        else:
+            key_path = home / ".config" / "gemini" / "key.txt"
+        
+        key_path.parent.mkdir(parents=True, exist_ok=True)
+
+        if not key_path.exists():
+            key_path.touch()
+            print(f"The key.txt file has been created in {key_path}.")
+            print("Please insert into file your API-key")
+
+        self._key = key_path.read_text(encoding='utf-8')
+        return self._key
 
     @property
     def config(self):
@@ -43,8 +66,7 @@ class GoogleTerminalGets:
             json.dump(list(info), f, indent=4, ensure_ascii=False)
 
 def main():
-    GEMINI_API_KEY = (ROOT / 'key.txt').read_text(encoding='utf-8').strip()
-    grequest = GoogleTerminalGets(GEMINI_API_KEY)
+    grequest = GoogleTerminalGets()
     window = deque(maxlen=20)
     try:
         while True:
