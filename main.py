@@ -42,7 +42,7 @@ class GoogleTerminalGets:
         self._config = file_conf.read_text(encoding='utf-8')
         return self._config
 
-    def ask(self, prompt):
+    def ask(self, prompt: str) -> str:
         full_response = ''
         try:
             print("\n[Gemma]: ", flush=True)
@@ -61,7 +61,7 @@ class GoogleTerminalGets:
         except Exception as e:
             print(f"\r\033[31m[Помилка API]: {e}\033[0m\n")
 
-    def save_response(self, info):
+    def save_response(self, info: list) -> None:
         with open(ROOT / 'context.json', 'w', encoding='utf-8') as f:
             json.dump(list(info), f, indent=4, ensure_ascii=False)
 
