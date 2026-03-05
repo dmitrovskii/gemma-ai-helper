@@ -48,7 +48,7 @@ class GoogleTerminalGets:
             print("\n[Gemma]: ", flush=True)
             response = self.client.models.generate_content_stream(
                 model = self.model_name, 
-                contents= f"### Instruction ###\n{self.config}\n\n### Question ###\n{prompt}"
+                contents = [self.config, prompt] #f"### Instruction ###\n{self.config}\n\n### Question ###\n{prompt}"
             )
 
             for chunk in response:
