@@ -1,4 +1,3 @@
-import os
 import pathlib
 import json
 import platform
@@ -49,7 +48,7 @@ class GoogleTerminalGets:
         try:
             response = self.client.models.generate_content(
                 model = self.model_name, 
-                contents = [self.config, prompt] #f"### Instruction ###\n{self.config}\n\n### Question ###\n{prompt}"
+                contents = [self.config, prompt]
             )
             return response.text
 
@@ -62,23 +61,14 @@ class GoogleTerminalGets:
 
 def main():
     grequest = GoogleTerminalGets()
-    window = deque(maxlen=20)
     try:
         while True:
             prompt = input("[You]: ")
             response = grequest.ask(prompt)
             print(f"\n[Gemma]: {response}")
 
-            data_to_save = [
-                {"role": "user", "parts": prompt},
-                {"role": "model", "parts": response}
-            ]
-            window.extend(data_to_save)
-
     except KeyboardInterrupt:
         print("\nClosing program...")
-    finally: 
-        grequest.save_response(window)
 
 if __name__ == '__main__':
     main()
