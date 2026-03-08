@@ -37,6 +37,9 @@ class GoogleTerminalGets:
 
     @property
     def config(self):
+        if hasattr(self, '_config') and self._config:
+            return self._config
+        
         file_conf = pathlib.Path(ROOT / 'config' / 'config.txt')
         file_conf.touch(exist_ok=True)
         self._config = file_conf.read_text(encoding='utf-8')
