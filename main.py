@@ -46,20 +46,12 @@ class GoogleTerminalGets:
         return self._config
 
     def ask(self, prompt: str) -> str:
-        full_response = ''
         try:
-            print("\n[Gemma]: ", flush=True)
-            response = self.client.models.generate_content_stream(
+            response = self.client.models.generate_content(
                 model = self.model_name, 
                 contents = [self.config, prompt] #f"### Instruction ###\n{self.config}\n\n### Question ###\n{prompt}"
             )
-
-            for chunk in response:
-                if chunk.text:
-                    print(chunk.text, end="", flush=True)
-                    full_response += chunk.text
-            print("\n")
-            return full_response
+            return response.text
 
         except Exception as e:
             print(f"\r\033[31m[Помилка API]: {e}\033[0m\n")
@@ -75,6 +67,8 @@ def main():
         while True:
             prompt = input("[You]: ")
             response = grequest.ask(prompt)
+            print(f"\n[Gemma]: {response}")
+
             data_to_save = [
                 {"role": "user", "parts": prompt},
                 {"role": "model", "parts": response}
