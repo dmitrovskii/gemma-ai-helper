@@ -2,7 +2,6 @@ import pathlib
 import json
 import platform
 from google import genai
-from collections import deque
 
 ROOT = pathlib.Path(__file__).resolve().parent
 
@@ -28,8 +27,7 @@ class GoogleTerminalGets:
 
         if not key_path.exists():
             key_path.touch()
-            print(f"The key.txt file has been created in {key_path}.")
-            print("Please insert into file your API-key")
+            print(f"The key.txt file has been created in {key_path}.\nPlease insert into file your API-key")
 
         self._key = key_path.read_text(encoding='utf-8')
         return self._key
@@ -53,7 +51,7 @@ class GoogleTerminalGets:
             return response.text
 
         except Exception as e:
-            print(f"\r\033[31m[Помилка API]: {e}\033[0m\n")
+            print(f"\r\033[31m[Error API]: {e}\033[0m\n")
 
     def save_response(self, info: list) -> None:
         with open(ROOT / 'context.json', 'w', encoding='utf-8') as f:
