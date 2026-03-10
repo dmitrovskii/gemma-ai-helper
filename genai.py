@@ -54,10 +54,6 @@ class GoogleTerminalGets:
         except Exception as e:
             print(f"\r\033[31m[Error API]: {e}\033[0m\n")
 
-    def save_response(self, info: list) -> None:
-        with open(ROOT / 'context.json', 'w', encoding='utf-8') as f:
-            json.dump(list(info), f, indent=4, ensure_ascii=False)
-
 class ChatMemory:
     def __init__(self, filepath="context.json", max_len=20):
         self.filepath = pathlib.Path(ROOT / filepath)
@@ -81,3 +77,7 @@ class ChatMemory:
                 print(f"File '{self.filepath}' is not found.")
                 self.filepath.touch(exist_ok=True)
                 return deque([], maxlen=self.max_len)
+    
+    def save_history(self, data: list) -> None:
+        with open(self.filepath, "w") as f:
+            json.dump(list(data), f, indent=4, ensure_ascii=False)
