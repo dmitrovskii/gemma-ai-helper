@@ -1,6 +1,7 @@
 import pathlib
 import json
 import platform
+from collections import deque
 from google import genai
 
 ROOT = pathlib.Path(__file__).resolve().parent
@@ -56,3 +57,27 @@ class GoogleTerminalGets:
     def save_response(self, info: list) -> None:
         with open(ROOT / 'context.json', 'w', encoding='utf-8') as f:
             json.dump(list(info), f, indent=4, ensure_ascii=False)
+
+class ChatMemory:
+    def __init__(self, filepath="context.json", max_len=20):
+        self.filepath = pathlib.Path(ROOT / filepath)
+        self.max_len = max_len
+        self._history = None
+
+    @property
+    def history(self):
+        if self._history is None:
+            self._history = self._history_load()
+        return self._history
+
+    def _history_load(self):
+        if self.filepath.exists(): 
+            try:
+                with open(self.filepath, "r", encoding='utf-8') as f:
+                    data = json.load(f)
+                    return deque(data, maxlen=self.max_len)
+                
+            except Exception:
+                print(f"File '{self.filepath}' is not found.")
+                self.filepath.touch(exist_ok=True)
+                return deque([], maxlen=self.max_len)
