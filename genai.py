@@ -73,10 +73,13 @@ class ChatMemory:
                     data = json.load(f)
                     return deque(data, maxlen=self.max_len)
                 
-            except Exception:
-                print(f"File '{self.filepath}' is not found.")
-                self.filepath.touch(exist_ok=True)
+            except Exception as e:
+                print(f"The error is: {e}")
                 return deque([], maxlen=self.max_len)
+        else:
+            print(f"File '{self.filepath}' is not found.")
+            self.filepath.touch(exist_ok=True)
+            return deque([], maxlen=self.max_len)
     
     def save_history(self, data: list) -> None:
         with open(self.filepath, "w") as f:
