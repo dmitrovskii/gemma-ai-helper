@@ -4,16 +4,19 @@ from google.genai import types
 
 def main():
 
-    model = GoogleTerminalGets()
-    chat = ChatMemory() 
+    chat = None
+    model = None
 
     try:
+        model = GoogleTerminalGets()
+        chat = ChatMemory()
+
         instructions = [
             types.Content(role="user", parts=[types.Part(text=f"SYSTEM INSTRUCTION: {model.instruct}")])
         ]
         
         history = chat.history
-        
+
         while True:
             user_text = input("[User]: ")
             history.extend([
