@@ -72,7 +72,7 @@ class ChatMemory:
             try:
                 with open(self.filepath, "r", encoding='utf-8') as f:
                     data = json.load(f)
-                    return deque(data, maxlen=self.max_len)
+                    return deque(self.deconvert(data), maxlen=self.max_len)
                 
             except Exception as e:
                 print(f"The error is: {e}")
