@@ -85,3 +85,6 @@ class ChatMemory:
     def save_history(self, data: list) -> None:
         with open(self.filepath, "w") as f:
             json.dump(list(data), f, indent=4, ensure_ascii=False)
+
+    def convert(data: list) -> list:
+        return [{"role": d.role, "parts": d.parts[0].text} for d in data]
