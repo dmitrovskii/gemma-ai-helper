@@ -30,7 +30,7 @@ class GoogleTerminalGets:
 
         if not key_path.exists():
             key_path.touch()
-            print(f"The key.txt file has been created in {key_path}.\nPlease insert into file your API-key")
+            print(f"\033[33mThe key.txt file has been created in {key_path}.\nPlease insert into file your API-key.\033[0m")
         return key_path.read_text(encoding='utf-8').strip()
 
     @property
