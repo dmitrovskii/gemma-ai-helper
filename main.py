@@ -32,8 +32,11 @@ def main():
 
     except KeyboardInterrupt:
         print("\nClose...")
+    except ValueError:
+        print("\033[33mThe key.txt file is empty. Please insert into file your API-key.\033[0m")
     finally:
-        chat.save_history(chat.convert(history))
+        if not chat is None:
+            chat.save_history(chat.convert(history))
 
 if __name__ == '__main__':
     main()
