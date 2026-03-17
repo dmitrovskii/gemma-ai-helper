@@ -86,10 +86,10 @@ class ChatMemory:
         with open(self.filepath, "w") as f:
             json.dump(list(data), f, indent=4, ensure_ascii=False)
 
-    def convert(data: list) -> list:
+    def convert(self, data: list) -> list:
         return [{"role": d.role, "parts": d.parts[0].text} for d in data]
 
-    def deconvert(json_data: list) -> list:
+    def deconvert(self, json_data: list) -> list:
         deconvert_data = []
         for item in json_data:
             content = genai.types.Content(role=item["role"], parts=[genai.types.Part(text=item["parts"])])
