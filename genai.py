@@ -8,16 +8,18 @@ ROOT = pathlib.Path(__file__).resolve().parent
 
 class GoogleTerminalGets:
     def __init__(self, model_name="gemma-3-27b-it"):
-        self.client = genai.Client(api_key=self.key)
-        self.model_name = model_name
-        self._instruct = None
         self._key = None
+        self._instruct = None
+        self.model_name = model_name
+        self.client = genai.Client(api_key=self.key)
 
     @property
     def key(self):
-        if hasattr(self, '_key') and self._key:
-            return self._key
+        if self._key is None:
+            self._key = self._key_load()
+        return self._key
 
+    def _key_load(self):
         home = pathlib.Path.home()
         if platform.system() == 'Windows':
             key_path = home / "AppData" / "Roaming" / "gemini" / "key.txt"
@@ -29,9 +31,7 @@ class GoogleTerminalGets:
         if not key_path.exists():
             key_path.touch()
             print(f"The key.txt file has been created in {key_path}.\nPlease insert into file your API-key")
-
-        self._key = key_path.read_text(encoding='utf-8')
-        return self._key
+        return key_path.read_text(encoding='utf-8').strip()
 
     @property
     def instruct(self):
