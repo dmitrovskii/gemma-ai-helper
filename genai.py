@@ -10,7 +10,7 @@ class GoogleTerminalGets:
     def __init__(self, model_name="gemma-3-27b-it"):
         self.client = genai.Client(api_key=self.key)
         self.model_name = model_name
-        self._config = None
+        self._instruct = None
         self._key = None
 
     @property
@@ -34,20 +34,21 @@ class GoogleTerminalGets:
         return self._key
 
     @property
-    def config(self):
-        if hasattr(self, '_config') and self._config:
-            return self._config
-        
+    def instruct(self):
+        if self._instruct is None:
+            self._instruct = self._instruct_load()
+        return self._instruct
+
+    def _instruct_load(self):
         file_conf = pathlib.Path(ROOT / 'config' / 'config.txt')
         file_conf.touch(exist_ok=True)
-        self._config = file_conf.read_text(encoding='utf-8')
-        return self._config
+        return file_conf.read_text(encoding='utf-8') 
 
     def ask(self, prompt: str) -> str:
         try:
             response = self.client.models.generate_content(
                 model = self.model_name, 
-                contents = [self.config, prompt]
+                contents = [self.instruct, prompt]
             )
             return response.text
 
