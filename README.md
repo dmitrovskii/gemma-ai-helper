@@ -1,6 +1,6 @@
 # **Gemma AI Helper**
 
-A lightweight CLI chat application powered by Google Gemini API.
+A lightweight CLI chat application powered by Google Gemini API. Get your API-key here: [Google AI Studio](https://aistudio.google.com/api-keys)
 
 ## Features
 * **Context Memory:** Maintains conversation flow using `collections.deque` for efficient history management.
