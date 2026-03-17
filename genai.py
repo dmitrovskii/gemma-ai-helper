@@ -44,7 +44,7 @@ class GoogleTerminalGets:
         file_conf.touch(exist_ok=True)
         return file_conf.read_text(encoding='utf-8') 
 
-    def ask(self, data: str) -> str:
+    def ask(self, data: list) -> str:
         try:
             response = self.client.models.generate_content(
                 model = self.model_name, 
