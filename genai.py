@@ -88,3 +88,10 @@ class ChatMemory:
 
     def convert(data: list) -> list:
         return [{"role": d.role, "parts": d.parts[0].text} for d in data]
+
+    def deconvert(json_data: list) -> list:
+        deconvert_data = []
+        for item in json_data:
+            content = genai.types.Content(role=item["role"], parts=[genai.types.Part(text=item["parts"])])
+            deconvert_data.append(content)
+        return deconvert_data
