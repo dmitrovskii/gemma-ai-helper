@@ -41,6 +41,7 @@ class GoogleTerminalGets:
 
     def _instruct_load(self):
         file_conf = pathlib.Path(ROOT / 'config' / 'config.txt')
+        file_conf.parent.mkdir(parents=True, exist_ok=True)
         file_conf.touch(exist_ok=True)
         return file_conf.read_text(encoding='utf-8') 
 
