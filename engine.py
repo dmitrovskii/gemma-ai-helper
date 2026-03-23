@@ -84,7 +84,7 @@ class ChatMemory:
             return deque([], maxlen=self.max_len)
     
     def save_history(self, data: list) -> None:
-        with open(self.filepath, "w") as f:
+        with open(self.filepath, "w", encoding="utf-8") as f:
             json.dump(list(data), f, indent=4, ensure_ascii=False)
 
     def convert(self, data: list) -> list:
