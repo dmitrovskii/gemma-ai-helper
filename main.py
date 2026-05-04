@@ -28,7 +28,7 @@ def main():
             )  
 
             history.extend([
-                types.Content(role="user", parts=[types.Part(text=response)])
+                types.Content(role="model", parts=[types.Part(text=response)])
             ])
 
             print(f"\n[Model]: {response}")
