@@ -38,7 +38,7 @@ def main():
     except ValueError:
         print("\033[33mThe key.txt file is empty. Please insert into file your API-key.\033[0m")
     finally:
-        if not chat is None:
+        if chat is not None:
             chat.save_history(chat.convert(history))
 
 if __name__ == '__main__':
