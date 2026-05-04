@@ -18,11 +18,15 @@ A lightweight CLI chat application powered by Google Gemini API. Get your API-ke
 ## Quick Start
 1. **Clone the repo:**
    `git clone https://github.com/dmitrovskii/gemma-ai-helper.git`
-2. **Install requirements:**
+2. **Create and activate virtual environment**
+   `python -m venv .venv`
+   - Windows: `.venv\Scripts\activate`
+   - Linux: `source .venv/bin/activate`
+3. **Install requirements:**
    `pip install -r requirements.txt`
-3. **Setup API Key:**
+4. **Setup API Key:**
    Save your API key in key.txt within the configuration paths mentioned above.
-4. **Launch:**
+5. **Launch:**
    `python main.py`
 
 ## Roadmap
